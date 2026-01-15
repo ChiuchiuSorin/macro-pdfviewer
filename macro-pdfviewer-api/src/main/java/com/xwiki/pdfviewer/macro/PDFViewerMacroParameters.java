@@ -22,7 +22,7 @@ package com.xwiki.pdfviewer.macro;
 import org.xwiki.properties.annotation.PropertyAdvanced;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyDisplayType;
-import org.xwiki.properties.annotation.PropertyMandatory;
+import org.xwiki.stability.Unstable;
 
 import com.xwiki.pdfviewer.PDFResourceReference;
 
@@ -40,6 +40,14 @@ public class PDFViewerMacroParameters
      * the name of the attachment when is used along with the document parameter.
      */
     private String file;
+
+    /**
+     * One or multiple PDF files to be viewed, imported from external URLs. In case of multiple files, the
+     * {@code String} contains a comma-separated list of URLs.
+     *
+     * @since 2.6.3
+     */
+    private String fileFromExternalUrl;
 
     /**
      * The viewer width. Uses a percentage value, for example: 25%, 50%, 100%.
@@ -81,12 +89,31 @@ public class PDFViewerMacroParameters
      * @param file one or a list of PDF files
      */
     @PropertyDisplayType(PDFResourceReference.class)
-    @PropertyMandatory
-    @PropertyDescription("The full PDF file reference, an absolute URL or only the name of the attachment when is used "
-        + "along with the document parameter. Multiple files can be defined.")
     public void setFile(String file)
     {
         this.file = file;
+    }
+
+    /**
+     * @return one or a comma-separated list of PDF files from external URLs
+     * @since 2.6.3
+     */
+    @Unstable
+    public String getFileFromExternalUrl()
+    {
+        return fileFromExternalUrl;
+    }
+
+    /**
+     * Set one or multiple PDF files from external URLs.
+     *
+     * @param fileFromExternalUrl a single URL or a comma-separated list of URLs
+     * @since 2.6.3
+     */
+    @Unstable
+    public void setFileFromExternalUrl(String fileFromExternalUrl)
+    {
+        this.fileFromExternalUrl = fileFromExternalUrl;
     }
 
     /**

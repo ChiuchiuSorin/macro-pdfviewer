@@ -31,6 +31,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.script.ScriptContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.AttachmentReference;
@@ -68,6 +69,8 @@ import com.xwiki.pdfviewer.macro.PDFViewerMacroParameters;
 @Singleton
 public class PDFViewerMacro extends AbstractMacro<PDFViewerMacroParameters>
 {
+    private static final String PDF_SEPARATOR = "(?<=\\.pdf),";
+
     private final List<String> delegatedRightsValues = List.of("1", "true", "yes");
 
     @Inject
@@ -119,9 +122,17 @@ public class PDFViewerMacro extends AbstractMacro<PDFViewerMacroParameters>
         try {
             mjsMimeTypeRegistrar.maybeRegisterMJSMimeType();
             Template customTemplate = this.templateManager.getTemplate("pdfviewer/pdfviewer.vm");
-            String[] files = parameters.getFile().split("(?<=\\.pdf),");
+            List<String> allFiles = new ArrayList<>();
+            if (StringUtils.isNotBlank(parameters.getFile())) {
+                String[] files = parameters.getFile().split(PDF_SEPARATOR);
+                Collections.addAll(allFiles, files);
+            }
+            if (StringUtils.isNotBlank(parameters.getFileFromExternalUrl())) {
+                String[] filesFromExternalUrl = parameters.getFileFromExternalUrl().split(PDF_SEPARATOR);
+                Collections.addAll(allFiles, filesFromExternalUrl);
+            }
             List<PDFFile> resourcesList = new ArrayList<>();
-            for (String file : files) {
+            for (String file : allFiles) {
                 resourcesList.add(getPDFFile(file, parameters.getAsAuthor(), parameters.getDocument()));
             }
             this.bindValues(parameters, resourcesList);
