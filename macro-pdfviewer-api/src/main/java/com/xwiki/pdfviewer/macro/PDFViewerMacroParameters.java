@@ -66,7 +66,7 @@ public class PDFViewerMacroParameters
     private String document;
 
     /**
-     * If this value is true (or 1 or yes) and the user has no access to the document to which the PDF file is attached,
+     * If this value is true (or 1 or yes) and the user has no access to the document to which the PDF file is attached,
      * the PDF file could still be viewed on behalf of the author of the document containing the macro (if that author
      * has access to the containing document).
      *

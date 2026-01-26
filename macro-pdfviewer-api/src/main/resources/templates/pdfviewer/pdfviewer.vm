@@ -25,7 +25,7 @@
     #set ($withCredentials = $pdfViewerConfigDoc.getValue('withCredentials'))
     #set ($trustedOrigins = $stringtool.join($trustedOrigins.split('\r\n'), ','))
     #set ($queryString = $escapetool.url({
-      'file': $file.getURL(),
+      'file': "${file.getURL()}&form_token=${services.csrf.token}",
       'trustedOrigins': $trustedOrigins,
       'withCredentials': $withCredentials,
       'delegatedView': $file.areViewRightsDelegated()

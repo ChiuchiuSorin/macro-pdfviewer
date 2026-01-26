@@ -37,14 +37,17 @@ public class PDFFile
 
     private boolean delegatedViewRights;
 
+    private boolean hasViewRights;
+
     /**
      * Empty constructor.
      */
     public PDFFile()
     {
-        this.url = null;
+        this.url = "";
         this.attachmentReference = null;
         this.delegatedViewRights = false;
+        this.hasViewRights = false;
     }
 
     /**
@@ -52,12 +55,34 @@ public class PDFFile
      *
      * @param attachmentReference the {@link AttachmentReference} of the PDF file.
      * @param url file download url.
+     * @param hasViewRights {@code true} if the view rights are given, or {@code false} otherwise.
      */
-    public PDFFile(AttachmentReference attachmentReference, String url)
+    public PDFFile(AttachmentReference attachmentReference, String url, boolean hasViewRights)
     {
         this.url = url;
         this.attachmentReference = attachmentReference;
         this.delegatedViewRights = false;
+        this.hasViewRights = hasViewRights;
+    }
+
+    /**
+     * See {@link #hasViewRights()}.
+     *
+     * @param hasViewRights {@code true} if the view rights are given, or {@code false} otherwise
+     */
+    public void setHasViewRights(boolean hasViewRights)
+    {
+        this.hasViewRights = hasViewRights;
+    }
+
+    /**
+     * Check if the view rights are given.
+     *
+     * @return {@code true} if the view rights are given, or {@code false} otherwise
+     */
+    public boolean hasViewRights()
+    {
+        return hasViewRights;
     }
 
     /**
